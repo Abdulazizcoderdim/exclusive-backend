@@ -12,8 +12,7 @@ class AuthController {
       });
       return res.status(201).json(data);
     } catch (error) {
-      res.status(400).json({ message: error.message });
-      console.log(error);
+      next(error);
     }
   }
 
@@ -23,8 +22,7 @@ class AuthController {
       await authService.activation(userId);
       return res.redirect(process.env.CLIENT_URL);
     } catch (error) {
-      res.status(400).json({ message: error.message });
-      console.log(error);
+      next(error);
     }
   }
 
@@ -38,7 +36,7 @@ class AuthController {
       });
       return res.json(data);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      next(error);
     }
   }
 
@@ -49,7 +47,7 @@ class AuthController {
       res.clearCookie('refreshToken');
       return res.json({ token });
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      next(error);
     }
   }
 
@@ -63,7 +61,7 @@ class AuthController {
       });
       return res.json(data);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      next(error);
     }
   }
 }

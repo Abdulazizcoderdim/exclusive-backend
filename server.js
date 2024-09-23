@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
+const errorMiddleware = require('./middleware/error.middleware');
 
 const app = express();
 
@@ -16,6 +17,9 @@ app.use(fileUpload({}));
 // routes
 app.use('/api/product', require('./routes/product.route'));
 app.use('/api/auth', require('./routes/auth.route'));
+
+// error middleware
+app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 5000;
 
