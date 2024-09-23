@@ -2,14 +2,15 @@ const bcrypt = require('bcrypt');
 const userModel = require('../models/user.model');
 const UserDto = require('../dtos/user.dto');
 const tokenService = require('./token.service');
+const mailService = require('./mail.service');
 
 class AuthService {
-  async register(name, emailOrPhone, password) {
-    if (!emailOrPhone || !password || !name) {
+  async register(name, email, password) {
+    if (!email || !password || !name) {
       throw new Error('Email and password are required');
     }
 
-    const existUser = await userModel.findOne({ emailOrPhone });
+    const existUser = await userModel.findOne({ email });
 
     if (existUser) {
       throw new Error('User already exists');
@@ -19,12 +20,16 @@ class AuthService {
 
     const user = await userModel.create({
       name,
-      emailOrPhone,
+      email,
       password: hashPassword,
     });
-    // email service
-
     const userDto = new UserDto(user);
+
+    await mailService.sendMail(
+      email,
+      `${process.env.API_URL}/api/auth/activation/${userDto.id}`
+    );
+
     const tokens = tokenService.generateToken({ ...userDto });
 
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
