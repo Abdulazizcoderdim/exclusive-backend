@@ -3,11 +3,13 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
 // middleware
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.static('static'));
 app.use(fileUpload({}));
 
