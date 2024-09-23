@@ -21,7 +21,7 @@ class AuthController {
     try {
       const userId = req.params.id;
       await authService.activation(userId);
-      return res.redirect('https://sammi.ac');
+      return res.redirect('https://newportfolio199.vercel.app');
     } catch (error) {
       res.status(400).json({ message: error.message });
       console.log(error);
