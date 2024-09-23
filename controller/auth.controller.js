@@ -1,10 +1,18 @@
+const { validationResult } = require('express-validator');
 const authService = require('../service/auth.service');
+const BaseError = require('../errors/base.error');
 
 class AuthController {
   async register(req, res, next) {
     try {
-      const { name, email, password } = req.body;
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return next(
+          BaseError.BadRequest('Error with validation', errors.array())
+        );
+      }
 
+      const { name, email, password } = req.body;
       const data = await authService.register(name, email, password);
       res.cookie('refreshToken', data.refreshToken, {
         httpOnly: true,
@@ -28,6 +36,13 @@ class AuthController {
 
   async login(req, res, next) {
     try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return next(
+          BaseError.BadRequest('Error with validation', errors.array())
+        );
+      }
+
       const { email, password } = req.body;
       const data = await authService.login(email, password);
       res.cookie('refreshToken', data.refreshToken, {
