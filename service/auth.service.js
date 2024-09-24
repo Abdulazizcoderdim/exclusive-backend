@@ -102,6 +102,15 @@ class AuthService {
   async getUsers() {
     return await userModel.find();
   }
+
+  async editUser(id, body) {
+    const user = await userModel.findById(id);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    const editUser = await userModel.findByIdAndUpdate(id, body, { new: true });
+    return editUser;
+  }
 }
 
 module.exports = new AuthService();

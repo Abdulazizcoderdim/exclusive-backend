@@ -88,6 +88,16 @@ class AuthController {
       next(error);
     }
   }
+
+  async editUser(req, res, next) {
+    try {
+      const { id } = req.params;
+      const data = await authService.editUser(id, req.body);
+      return res.json(data);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 module.exports = new AuthController();

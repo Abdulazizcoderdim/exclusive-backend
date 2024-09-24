@@ -24,6 +24,7 @@ router.post(
 );
 router.post('/logout', authController.logout);
 router.get('/refresh', authController.refresh);
-router.get('/get-users', authMiddleware, authController.getUser)
+router.get('/get-users', authMiddleware, authController.getUser);
+router.put('/edit-user/:id', authController.editUser);
 
 module.exports = router;
