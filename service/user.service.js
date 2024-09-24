@@ -16,6 +16,20 @@ class UserService {
       throw new Error('Product already in favorites');
     }
   }
+  async view(userId, productId) {
+    const user = await userModel.findById(userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    if (!user.viewedProducts.includes(productId)) {
+      user.viewedProducts.push(productId);
+      await user.save();
+      return user;
+    } else {
+      throw new Error('Product already in viewed');
+    }
+  }
 
   async unfavorite(userId, productId) {
     const user = await userModel.findById(userId);
@@ -35,6 +49,20 @@ class UserService {
     if (!user) {
       throw new Error('User not found');
     }
+    return user;
+  }
+
+  async unview(userId, productId) {
+    const user = await userModel.findById(userId);
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    user.viewedProducts = user.viewedProducts.filter(
+      viewId => viewId.toString() !== productId
+    );
+
+    await user.save();
     return user;
   }
 }

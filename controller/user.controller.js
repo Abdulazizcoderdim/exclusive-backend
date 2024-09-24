@@ -32,6 +32,27 @@ class UserController {
       res.status(500).json(error);
     }
   }
+
+  async view(req, res) {
+    try {
+      const { userId } = req.params;
+      const { productId } = req.body;
+      const user = await userService.view(userId, productId);
+      return res.json(user);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
+  async unview(req, res) {
+    try {
+      const { userId } = req.params;
+      const { productId } = req.body;
+      const user = await userService.unview(userId, productId);
+      return res.json(user);
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  }
 }
 
 module.exports = new UserController();
