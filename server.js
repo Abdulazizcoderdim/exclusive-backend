@@ -5,10 +5,12 @@ const mongoose = require('mongoose');
 const fileUpload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const errorMiddleware = require('./middleware/error.middleware');
+const cors = require('cors');
 
 const app = express();
 
 // middleware
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('static'));

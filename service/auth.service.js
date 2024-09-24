@@ -98,6 +98,10 @@ class AuthService {
 
     return { user: userDto, ...tokens };
   }
+
+  async getUsers() {
+    return await userModel.find();
+  }
 }
 
 module.exports = new AuthService();
