@@ -53,6 +53,16 @@ class UserController {
       res.status(500).json(error);
     }
   }
+
+  async makeAdmin(req, res) {
+    try {
+      const { id } = req.params;
+      const user = await userService.makeAdmin(id);
+      return res.json(user);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to update user role' });
+    }
+  }
 }
 
 module.exports = new UserController();

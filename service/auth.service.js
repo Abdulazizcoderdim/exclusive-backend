@@ -23,6 +23,7 @@ class AuthService {
       name,
       email,
       password: hashPassword,
+      role: 'user',
     });
     const userDto = new UserDto(user);
 

@@ -40,7 +40,7 @@ class ProductController {
     try {
       const editProduct = await productService.editProduct(
         req.params.id,
-        req.body
+        req.body,
       );
       res.status(200).json(editProduct);
     } catch (error) {

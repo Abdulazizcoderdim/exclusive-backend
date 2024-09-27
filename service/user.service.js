@@ -65,6 +65,16 @@ class UserService {
     await user.save();
     return user;
   }
+
+  async makeAdmin(id) {
+    const user = await userModel.findById(id);
+    if (!user) {
+      throw new Error('User not found');
+    }
+    user.role = 'admin';
+    await user.save();
+    return user;
+  }
 }
 
 module.exports = new UserService();
