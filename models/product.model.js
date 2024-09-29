@@ -32,6 +32,10 @@ const productSchema = new Schema(
       type: Boolean,
       default: true,
     },
+    model: {
+      type: String,
+      required: true,
+    },
     colors: {
       type: [String], // Masalan: ['qora', 'oq']
       required: true,
@@ -40,10 +44,10 @@ const productSchema = new Schema(
       type: [String], // Masalan: ['XS', 'S', 'M', 'L', 'XL']
       required: true,
     },
-    quantity: {
-      type: Number,
-      required: true,
-    },
+    // quantity: {
+    //   type: Number,
+    //   required: true,
+    // },
     description: {
       type: String,
       required: true,
@@ -52,14 +56,14 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
-    isFavorite: {
-      type: Boolean,
-      default: false,
-    },
-    isViewed: {
-      type: Boolean,
-      default: false,
-    },
+    // isFavorite: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // isViewed: {
+    //   type: Boolean,
+    //   default: false,
+    // },
   },
   { timestamps: true }
 );
