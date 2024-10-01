@@ -7,6 +7,10 @@ const userSchema = new Schema(
       required: true,
       trim: true,
     },
+    lastName: {
+      type: String,
+      trim: true,
+    },
     email: {
       type: String,
       required: true,
@@ -22,6 +26,8 @@ const userSchema = new Schema(
     },
     phoneNumber: {
       type: String,
+      required: true,
+      trim: true,
     },
     address: {
       street: String,
@@ -30,18 +36,6 @@ const userSchema = new Schema(
       zipCode: String,
       country: String,
     },
-    favoriteProducts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Product',
-      },
-    ],
-    viewedProducts: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Product',
-      },
-    ],
     orders: [
       {
         type: Schema.Types.ObjectId,

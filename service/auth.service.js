@@ -4,11 +4,14 @@ const UserDto = require('../dtos/user.dto');
 const tokenService = require('./token.service');
 const mailService = require('./mail.service');
 const BaseError = require('../errors/base.error');
+const EditUserDto = require('../dtos/edituser.dto');
 
 class AuthService {
-  async register(name, email, password) {
-    if (!email || !password || !name) {
-      throw BaseError.BadRequest('Email and password are required');
+  async register(name, email, password, phoneNumber) {
+    if (!email || !password || !name || !phoneNumber) {
+      throw BaseError.BadRequest(
+        'Email, password and Phone Number are required'
+      );
     }
 
     const existUser = await userModel.findOne({ email });
@@ -24,6 +27,7 @@ class AuthService {
       email,
       password: hashPassword,
       role: 'user',
+      phoneNumber,
     });
     const userDto = new UserDto(user);
 
@@ -109,8 +113,34 @@ class AuthService {
     if (!user) {
       throw new Error('User not found');
     }
+
+    if (body.email === user.email) {
+      delete body.email;
+    }
+
+    const isPassword = await bcrypt.compare(body.password, user.password);
+
+    if (!isPassword) {
+      throw BaseError.BadRequest('Password is incorrect');
+    }
+
+    if (body.password) {
+      const hashPassword = await bcrypt.hash(body.password, 10);
+      body.password = hashPassword;
+    }
+
+    if (body.email) {
+      const existUser = await userModel.findOne({ email: body.email });
+      if (existUser) {
+        return user.email;
+      }
+    }
+
     const editUser = await userModel.findByIdAndUpdate(id, body, { new: true });
-    return editUser;
+
+    const editUserDto = new EditUserDto(editUser);
+
+    return editUserDto;
   }
 }
 

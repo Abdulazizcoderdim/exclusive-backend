@@ -32,18 +32,18 @@ const productSchema = new Schema(
       type: Boolean,
       default: true,
     },
-    model: {
+    category: {
       type: String,
       required: true,
     },
-    colors: {
-      type: [String], // Masalan: ['qora', 'oq']
-      required: true,
-    },
-    sizes: {
-      type: [String], // Masalan: ['XS', 'S', 'M', 'L', 'XL']
-      required: true,
-    },
+    // colors: {
+    //   type: [String], // Masalan: ['qora', 'oq']
+    //   required: true,
+    // },
+    // sizes: {
+    //   type: [String], // Masalan: ['XS', 'S', 'M', 'L', 'XL']
+    //   required: true,
+    // },
     // quantity: {
     //   type: Number,
     //   required: true,

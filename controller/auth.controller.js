@@ -12,8 +12,13 @@ class AuthController {
         );
       }
 
-      const { name, email, password } = req.body;
-      const data = await authService.register(name, email, password);
+      const { name, email, password, phoneNumber } = req.body;
+      const data = await authService.register(
+        name,
+        email,
+        password,
+        phoneNumber
+      );
       res.cookie('refreshToken', data.refreshToken, {
         httpOnly: true,
         maxAge: 30 * 24 * 60 * 60 * 1000,
