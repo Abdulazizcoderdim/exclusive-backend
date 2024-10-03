@@ -2,6 +2,7 @@ const express = require('express');
 const authController = require('../controller/auth.controller');
 const { body } = require('express-validator');
 const authMiddleware = require('../middleware/auth.middleware');
+const passport = require('passport');
 
 const router = express.Router();
 
@@ -26,5 +27,34 @@ router.post('/logout', authController.logout);
 router.get('/refresh', authController.refresh);
 router.get('/get-users', authMiddleware, authController.getUser);
 router.put('/edit-user/:id', authController.editUser);
+router.get(
+  '/google',
+  passport.authenticate('google', {
+    successMessage: 'Login Successful',
+    scope: ['profile', 'email'],
+  })
+);
+router.get(
+  '/google/callback',
+  passport.authenticate('google', {
+    successRedirect: `${process.env.CLIENT_URL}`,
+    failureRedirect: `${process.env.CLIENT_URL}/login`,
+  })
+);
+
+router.get('/login/success', async (req, res) => {
+  console.log('reqqqqqqqqqqqqq', req.user);
+
+  if (req.user) {
+    res.status(200).json({ message: 'User Login', user: req.user });
+  } else {
+    res.status(400).json({ message: 'Not Authorized' });
+  }
+});
+
+router.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/login');
+});
 
 module.exports = router;

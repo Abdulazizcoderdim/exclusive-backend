@@ -20,9 +20,11 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    isGoogleAccount: {
-      type: Boolean,
-      default: false,
+    googleId: {
+      type: String,
+    },
+    profileImage: {
+      type: String,
     },
     phoneNumber: {
       type: String,

@@ -13,7 +13,11 @@ class ProductController {
     try {
       const newProduct = await productService.createProduct(
         req.body,
-        req.files.picture
+        req.files.picture,
+        req.files.picture2,
+        req.files.picture3,
+        req.files.picture4,
+        req.files.picture5
       );
       res.status(201).json(newProduct);
     } catch (error) {
