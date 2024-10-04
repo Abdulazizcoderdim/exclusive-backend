@@ -21,19 +21,6 @@ app.use(cookieParser());
 app.use(express.static('static'));
 app.use(fileUpload({}));
 
-// // passport
-// app.use(
-//   session({
-//     secret: 'asdasdasdasdasd12132',
-//     resave: false,
-//     saveUninitialized: false,
-//   })
-// );
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// passportConfig();
-
 // routes
 app.use('/api/product', require('./routes/product.route'));
 app.use('/api/auth', require('./routes/auth.route'));
