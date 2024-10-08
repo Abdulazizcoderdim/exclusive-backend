@@ -9,6 +9,7 @@ class ProductController {
       next(error);
     }
   }
+
   async createProduct(req, res, next) {
     try {
       const newProduct = await productService.createProduct(
